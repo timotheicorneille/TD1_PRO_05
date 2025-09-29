@@ -86,31 +86,31 @@ function animateNumbers() {
     
     descriptions.forEach(desc => {
         const text = desc.innerHTML;
-        const ageMatch = text.match(/(\d+)\s+ans/);
+        const ageMatch = text.match(/j'ai\s+(\d+)\s+ans/i);
         
         if (ageMatch) {
             const targetAge = parseInt(ageMatch[1]);
-            const ageSpan = document.createElement('span');
-            ageSpan.className = 'age-counter';
             let currentAge = 0;
+            let hasAnimated = false;
             
             const updateAge = () => {
                 if (currentAge < targetAge) {
                     currentAge++;
-                    ageSpan.textContent = currentAge;
+                    desc.innerHTML = text.replace(/(\d+)(?=\s+ans)/i, currentAge);
                     setTimeout(updateAge, 50);
                 } else {
-                    ageSpan.textContent = targetAge;
+                    desc.innerHTML = text.replace(/(\d+)(?=\s+ans)/i, targetAge);
                 }
             };
             
-            desc.innerHTML = text.replace(/\d+(?=\s+ans)/, '<span class="age-counter">0</span>');
-            const counter = desc.querySelector('.age-counter');
+            // Mettre à 0 au début
+            desc.innerHTML = text.replace(/(\d+)(?=\s+ans)/i, '0');
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting && currentAge === 0) {
-                        updateAge();
+                    if (entry.isIntersecting && !hasAnimated) {
+                        hasAnimated = true;
+                        setTimeout(updateAge, 300);
                     }
                 });
             }, { threshold: 0.5 });
