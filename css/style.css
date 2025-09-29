@@ -1,3 +1,319 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f0f1e;
+    min-height: 100vh;
+    padding: 60px 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Formes géométriques animées en arrière-plan */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    z-index: 0;
+    animation: float 20s infinite ease-in-out;
+}
+
+body::before {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, #00f5a0, #00d9f5);
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+body::after {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, #f857a6, #ff5858);
+    bottom: -100px;
+    right: -100px;
+    animation-delay: 5s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-30px, 30px) scale(0.9);
+    }
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Carte individuelle */
+.part-L {
+    position: relative;
+}
+
+h2 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #00f5a0, #00d9f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(0, 245, 160, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 20px rgba(0, 217, 245, 0.8));
+    }
+}
+
+/* Carte de présentation */
+.cartePresentation {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.cartePresentation::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(0, 245, 160, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s;
+}
+
+.cartePresentation:hover::before {
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    0% {
+        top: -50%;
+        left: -50%;
+    }
+    100% {
+        top: 150%;
+        left: 150%;
+    }
+}
+
+.cartePresentation:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 80px rgba(0, 245, 160, 0.3);
+    border-color: rgba(0, 245, 160, 0.5);
+}
+
+/* Section description */
+.description {
+    background: linear-gradient(135deg, rgba(0, 245, 160, 0.1), rgba(0, 217, 245, 0.1));
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #00f5a0;
+    position: relative;
+    overflow: hidden;
+}
+
+.description::before {
+    content: '👋';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.description p {
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* Section loisirs */
+.loisir {
+    background: linear-gradient(135deg, rgba(248, 87, 166, 0.1), rgba(255, 88, 88, 0.1));
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #f857a6;
+    position: relative;
+    overflow: hidden;
+}
+
+.loisir::before {
+    content: '❤️';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.listLoisir {
+    color: #e0e0e0;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.listLoisir ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.itemList {
+    padding: 8px 0 8px 30px;
+    position: relative;
+    color: #c0c0c0;
+    font-weight: 400;
+    transition: all 0.3s;
+}
+
+.itemList:hover {
+    color: #ffffff;
+    padding-left: 35px;
+}
+
+.itemList::before {
+    content: "▶";
+    position: absolute;
+    left: 10px;
+    color: #00f5a0;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+}
+
+.itemList:hover::before {
+    color: #f857a6;
+    transform: translateX(3px);
+}
+
+/* Parcours scolaire */
+.pSco {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(74, 0, 224, 0.1));
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 4px solid #8a2be2;
+    position: relative;
+    overflow: hidden;
+}
+
+.pSco::before {
+    content: '🎓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.pSco p {
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* Animations d'entrée */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.part-L {
+    animation: fadeInUp 0.8s ease-out backwards;
+}
+
+.part-L:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.part-L:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.part-L:nth-child(3) {
+    animation-delay: 0.5s;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .container {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 30px 15px;
+    }
+    
+    .container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .cartePresentation {
+        padding: 20px;
+    }
+    
+    body::before,
+    body::after {
+        width: 300px;
+        height: 300px;
+    }
 }
